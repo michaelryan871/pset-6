@@ -1,5 +1,9 @@
+import java.text.NumberFormat;
+
 public class BankAccount {
         
+	private static long prevAccountNo = 100000000L;
+	
     private int pin;
     private long accountNo;
     private double balance;
@@ -11,6 +15,27 @@ public class BankAccount {
     //                                                                        //
     ////////////////////////////////////////////////////////////////////////////
     
+    public BankAccount(int pin, User accountHolder) {
+    	this.pin = pin;
+    	this.accountNo = ++BankAccount.prevAccountNo; 
+    	this.balance = 0.0;
+    	this.accountHolder = accountHolder;
+    }
+    
+    public int getPin() {
+    	return pin;
+    }
+    
+    public long getAccountNo() {
+    	return accountNo; 
+    }
+    
+    public String getBalance() {
+    	NumberFormat currency = NumberFormat.getCurrencyInstance();
+    	
+    	return currency.format(balance);
+    }
+    
     /*
      * Formats the account balance in preparation to be written to the data file.
      * 
@@ -19,6 +44,10 @@ public class BankAccount {
     
     private String formatBalance() {
         return String.format("%1$15s", balance);
+    }
+    
+    public User getAccountHolder() {
+    	return accountHolder;
     }
     
     /*
