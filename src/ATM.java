@@ -47,7 +47,7 @@ public class ATM {
     		System.out.print("Account No.: ");
     		long accountNo = in.nextLong();
     		
-    		System.out.print("IN        : ");
+    		System.out.print("PIN        : ");
     		int pin = in.nextInt();
     		
     		if(isValidLogin(accountNo, pin)) {
@@ -55,17 +55,70 @@ public class ATM {
     			
     			boolean validLogin = true; 
     			while (validLogin) {
+    			switch (getSelection()) {
     				case VIEW: showBalance(); break;
     				case DEPOSIT: deposit(); break; 
     				case WITHDRAW: withdraw(); break;
     				case LOGOUT: validLogin = false; break;
     			}
     		}
-    		
+    	  } else {
+    		  System.out.println("\nInvalid account number and/or PIN.\n");
+    	  	}
     	}
     }
     
+    public boolean isValidLogin(long accountNo, int pin) {
+		return accountNo == activeAccount.getAccountNo() && pin == activeAccount.getPin();
+	}
     
+    public int getSelection() {	
+		System.out.println("[1] View balance");
+		System.out.println("[2] Deposit money");
+		System.out.println("[3] Withdraw money");
+		System.out.println("[4] Logout");
+		
+		return in.nextInt();
+	}
+    
+    public void showBalance() {
+		System.out.println("\nCurrent balance: " + activeAccount.getBalance());
+	}
+
+	public void deposit() {
+		System.out.print("\nEnter amount: ");
+		double amount = in.nextDouble();
+				
+		int status = activeAccount.deposit(amount);
+		if (status == ATM.INVALID) {
+			System.out.println("\nDeposit rejected. Amount must be greater than $0.00.\n");
+		} else if (status == ATM.SUCCESS) {
+			System.out.println("\nDeposit accepted.\n");
+		}
+	}	
+
+	public void withdraw() {
+		System.out.print("\nEnter amount:");
+		double amount = in.nextDouble();
+				
+		int status = activeAccount.withdraw(amount);
+		if (status == ATM.INVALID) {
+			System.out.println("\nWithdrawal rejected. Amount must be greater than $0.00.\n");
+		} else if (status == ATM.INSUFFICIENT) {
+			System.out.println("\nWithdrawal rejected. Insufficient funds.\n");
+		} else if (status == ATM.SUCCESS) {
+			System.out.println("\nWithdrawal accepted.\n");
+		}
+	}
+	
+	public void shutdown() {
+		if (in != null) {
+			in.close();
+		}
+		
+		System.out.println("\nGoodbye!");
+		System.exit(0);
+	}
     /*
      * Application execution begins here.
      */
