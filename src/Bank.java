@@ -15,7 +15,7 @@ public class Bank {
 	 * as a single line of text. These start and end indexes help to parse the
 	 *line of text into individual account fields.
 	 */
-    
+
     private final static int ACCT_START = 0;
     private final static int ACCT_END = 9;
     private final static int PIN_START = 9;

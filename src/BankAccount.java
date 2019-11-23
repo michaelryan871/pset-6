@@ -1,8 +1,6 @@
 import java.text.NumberFormat;
 
 public class BankAccount {
-        
-	private static long prevAccountNo = 100000000L;
 	
     private int pin;
     private long accountNo;
@@ -15,9 +13,16 @@ public class BankAccount {
     //                                                                        //
     ////////////////////////////////////////////////////////////////////////////
     
-    public BankAccount(int pin, User accountHolder) {
+    public BankAccount(int pin, long accountNo, double balance, User accountHolder) {
     	this.pin = pin;
-    	this.accountNo = ++BankAccount.prevAccountNo; 
+    	this.accountNo = accountNo;
+    	this.balance = balance; 
+    	this.accountHolder = accountHolder;
+    }
+    
+    public BankAccount(int pin, long accountNo, User accountHolder) {
+    	this.pin = pin;
+    	this.accountNo = accountNo; 
     	this.balance = 0.0;
     	this.accountHolder = accountHolder;
     }
@@ -34,6 +39,10 @@ public class BankAccount {
     	NumberFormat currency = NumberFormat.getCurrencyInstance();
     	
     	return currency.format(balance);
+    }
+    
+    public User getAccountHolder() {
+    	return accountHolder;
     }
     
     public int deposit(double amount) {
@@ -67,11 +76,7 @@ public class BankAccount {
     private String formatBalance() {
         return String.format("%1$15s", balance);
     }
-    
-    public User getAccountHolder() {
-    	return accountHolder;
-    }
-    
+     
     /*
      * Converts this BankAccount object to a string of text in preparation to
      * be written to the data file.
