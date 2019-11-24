@@ -5,7 +5,7 @@ public class ATM {
     private Scanner in;
     private BankAccount activeAccount;
     private Bank bank;
-    //private User newUser;
+    private User newUser;
 	//private int pin;
 	//private int accountNo;
 	//private int balance; 
@@ -21,11 +21,12 @@ public class ATM {
     public static final int INVALID = 0; 
     public static final int INSUFFICIENT = 1;
     public static final int SUCCESS = 2; 
+    public static final int OVERFLOW = 3;
     
     public ATM() {
         in = new Scanner(System.in);
         
-        //activeAccount = new BankAccount(pin, accountNo, balance, new User("Ryan", "Wilson"));
+        activeAccount = new BankAccount(1234, 123456789, 0, new User("Ryan", "Wilson"));
     }
     
     public void startup() {
@@ -39,7 +40,6 @@ public class ATM {
             int pin = in.nextInt();
             
             if (isValidLogin(accountNo, pin)) {
-            	activeAccount = bank.login(accountNo, pin);
                 System.out.println("\nHello, again, " + activeAccount.getAccountHolder().getFirstName() + "!\n");
                 
                 boolean validLogin = true;
@@ -48,7 +48,6 @@ public class ATM {
                         case VIEW: showBalance(); break;
                         case DEPOSIT: deposit(); break;
                         case WITHDRAW: withdraw(); break;
-                        //case TRANSFER: transfer(); break;
                         case LOGOUT: validLogin = false; break;
                         default: System.out.println("\nInvalid selection.\n"); break;
                     }
@@ -64,13 +63,7 @@ public class ATM {
     }
     
     public boolean isValidLogin(long accountNo, int pin) {
-    	boolean valid = false;
-    	try {
-    		valid = bank.login(accountNo, pin) != null ? true : false;
-    	}catch (Exception e) {
-    		valid = false;
-    	}
-    	return valid;
+        return accountNo == activeAccount.getAccountNo() && pin == activeAccount.getPin();
     }
     
     public int getSelection() {
@@ -87,6 +80,7 @@ public class ATM {
         System.out.println("\nCurrent balance: " + activeAccount.getBalance());
     }
     
+    
     public void deposit() {
         System.out.print("\nEnter amount: ");
         double amount = in.nextDouble();
@@ -94,8 +88,10 @@ public class ATM {
         int status = activeAccount.deposit(amount);
         if (status == ATM.INVALID) {
             System.out.println("\nDeposit rejected. Amount must be greater than $0.00.\n");
-        } else if (status == ATM.SUCCESS) {
-            System.out.println("\nDeposit accepted.\n");
+        } else if (status == ATM.OVERFLOW) {
+            System.out.println("\nDeposit rejected. Amount would cause balance to exceed $999,999,999,999.99.\n");
+        } else {
+        	System.out.print("\nDeposit accepted.\n");
         }
     }
         
