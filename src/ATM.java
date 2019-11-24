@@ -91,7 +91,7 @@ public class ATM {
         } else if (status == ATM.OVERFLOW) {
             System.out.println("\nDeposit rejected. Amount would cause balance to exceed $999,999,999,999.99.\n");
         } else {
-        	System.out.print("\nDeposit accepted.\n");
+        	System.out.print("\nDeposit accepted.\n\n");
         }
     }
         
