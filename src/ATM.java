@@ -133,12 +133,23 @@ public class ATM {
     }
     
     public void transfer() {
-    	System.out.println("\nTransfer test.\n");
-    	
-    	
-    	 
-    		
-    }
+    	long secondedAccountNumber;
+    	boolean validAccount = true;
+        System.out.print("\nEnter account: ");
+        if(in.hasNextLong()) {
+        	secondedAccountNumber = in.nextLong();
+        }else {
+        	secondedAccountNumber = 0;
+        	in.nextLine();
+        	in.nextLine();
+        }
+
+        System.out.print("Enter amount: ");
+        double amount = in.nextDouble();
+        if(bank.getAccount(secondedAccountNumber) == null) {
+        	validAccount = false;
+        }
+        
     
     public void shutdown() {
         if (in != null) {
