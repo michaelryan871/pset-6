@@ -110,6 +110,8 @@ public class ATM {
         } else if (status == ATM.OVERFLOW) {
             System.out.println("\nDeposit rejected. Amount would cause balance to exceed $999,999,999,999.99.\n");
         } else {
+        	bank.update(activeAccount);
+        	bank.save();
         	System.out.println("\nDeposit accepted.\n\n");
         }
     }
@@ -124,13 +126,16 @@ public class ATM {
         } else if (status == ATM.INSUFFICIENT) {
             System.out.println("\nWithdrawal rejected. Insufficient funds.\n");
         } else if (status == ATM.SUCCESS) {
+        	bank.update(activeAccount);
+        	bank.save();
             System.out.println("\nWithdrawal accepted.\n");
         }
     }
     
     public void transfer() {
     	System.out.println("\nTransfer test.\n");
-    	 bank.save();
+    	
+    	
     	 
     		
     }
