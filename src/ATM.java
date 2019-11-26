@@ -150,6 +150,31 @@ public class ATM {
         	validAccount = false;
         }
         
+        if(validAccount) {
+        	BankAccount transferAccount = bank.getAccount(secondedAccountNumber);
+        	int withdrawStatus = activeAccount.withdraw(amount);
+        	if (withdrawStatus == ATM.INVALID) {
+                System.out.println("\nTransfer rejected. Amount must be greater than $0.00.\n");
+            } else if (withdrawStatus == ATM.INSUFFICIENT) {
+                System.out.println("\nTransfer rejected. Insufficient funds.\n");
+            } else if (withdrawStatus == ATM.SUCCESS) {
+            	int depositStatus = transferAccount.deposit(amount);
+                if (depositStatus == ATM.OVERFLOW) {
+                    System.out.println("\nTransfer rejected. Amount would cause destination balance to exceed $999,999,999,999.99.\n");
+                } else if (depositStatus == ATM.SUCCESS) {
+                	System.out.println("\nTransfer accepted.\n");
+                	bank.update(activeAccount);
+                	bank.save();
+                }
+            }
+        }else {
+        	System.out.println("\nTransfer rejected. Destination account not found.\n");
+        }
+        
+    }
+    
+    
+    
     
     public void shutdown() {
         if (in != null) {
