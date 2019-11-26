@@ -37,17 +37,25 @@ public class ATM {
     
     public void startup() {
     	long accountNo;
+    	String accountString = ""; 
     	int pin;
         System.out.println("Welcome to the AIT ATM!\n");
         
         while (true) {
             System.out.print("Account No.: ");
-            accountNo = in.nextLong();
+            accountString = in.nextLine();
+                
+            
+            if (accountString.trim().equals("+")) {
+            	accountCreation();
+            } else {
             System.out.print("PIN        : ");
             pin = in.nextInt();
-            login(accountNo,pin);
+            login(Long.parseLong(accountString, 10),pin);
+            }
         }
     }
+    
     public void login(long accountNo, int pin) {
     	if (isValidLogin(accountNo, pin)) {	
         	activeAccount = bank.login(accountNo, pin);
@@ -150,6 +158,7 @@ public class ATM {
         	validAccount = false;
         }
         
+        
         if(validAccount) {
         	BankAccount transferAccount = bank.getAccount(secondedAccountNumber);
         	int withdrawStatus = activeAccount.withdraw(amount);
@@ -173,8 +182,15 @@ public class ATM {
         
     }
     
-    
-    
+   
+    public void accountCreation() {    	
+    	System.out.print("\nFirst name: ");
+    	String firstName = in.nextLine();
+    	System.out.print("Last name: ");
+    	String lastName = in.nextLine();
+    	System.out.print("PIN: ");
+    	
+    }
     
     public void shutdown() {
         if (in != null) {
