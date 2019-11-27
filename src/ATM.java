@@ -41,6 +41,10 @@ public class ATM {
     	int pin;
         System.out.println("Welcome to the AIT ATM!\n");
         
+        if (accountString.trim().equals("+")) {
+            	accountCreation();
+            } else {
+        
         while (true) {
             System.out.print("Account No.: ");
             accountString = in.nextLine();
@@ -48,12 +52,10 @@ public class ATM {
             System.out.print("PIN        : ");
             pin = in.nextInt();
             login(Long.parseLong(accountString, 10),pin);
-         /*   
-            if (accountString.trim().equals("+")) {
-            	System.out.println("Account Creation Test.");
+
+        
+        		}
             }
-          */
-        }
     }
     
     public void login(long accountNo, int pin) {
@@ -189,8 +191,7 @@ public class ATM {
     	System.out.print("Last name: ");
     	String lastName = in.nextLine();
     	System.out.print("PIN: ");
-    	
-    	
+
     	
     }
     
