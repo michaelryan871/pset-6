@@ -36,33 +36,24 @@ public class ATM {
     }
     
     public void startup() {
+        long accountNo;
+        String accountString = ""; 
+        int pin;
         System.out.println("Welcome to the AIT ATM!\n");
         
-       
-        while(true) {
-        	long accountNo;
-        	String accountString = ""; 
-        	int pin;	
-       
-        System.out.print("Account Noeeeeee.: ");
-        accountString = in.nextLine();
-        
-        
-        if (accountString.trim().equals("+")) { //creates the account
-        	accountCreation();
-        	Long.parseLong(accountString, 10);    //Converts the account string to account long
-        } else if (isValidLogin(Long.parseLong(accountString, 10), pin)){
-        	accountNo = in.nextLong();
-            pin = in.nextInt(); 
-        	System.out.print("PIN      eeee  : ");
-        	login(Long.parseLong(accountString, 10),pin); 		
-        } else {
-        	System.out.print("Test.");
-        }
-
-    }
- }
-        
+                while (true) {
+                    System.out.print("Account No.: ");
+                    accountString = in.nextLine();
+                    if (accountString.equals("+")) {
+                        accountCreation();
+                    } else {                                 
+                    System.out.print("PIN        : ");
+                    pin = in.nextInt();
+                    login(Long.parseLong(accountString, 10),pin);
+                }  
+                
+          }
+    } 
   
     
     public void login(long accountNo, int pin) {
@@ -228,8 +219,8 @@ public class ATM {
     	} else if (pin < 1000) {
     		System.out.println("\nPlease make sure your pin is larger than 1000.");
     	} else {
-    		System.out.println("\nYour bank account number is: ");
-    		getSelection();
+    		System.out.println("\nThank you. Your  account number is: \n Please login to your newly created account.");
+
     	}
     }
  
