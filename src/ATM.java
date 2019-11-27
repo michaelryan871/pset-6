@@ -41,27 +41,29 @@ public class ATM {
     	int pin;
         System.out.println("Welcome to the AIT ATM!\n");
         
-        if (accountString.trim().equals("+")) {
-            	accountCreation();
-            } else {
+       
+        while(true) {
+        System.out.print("Account No.: ");
+        accountString = in.nextLine();
         
-        while (true) {
-            System.out.print("Account No.: ");
-            accountString = in.nextLine();
-                    	 
-            System.out.print("PIN        : ");
-            pin = in.nextInt();
-            login(Long.parseLong(accountString, 10),pin);
+        
+        if (accountString.trim().equals("+")) { //creates the account
+        	accountCreation();
+        } else {
+        	System.out.print("PIN        : ");
+            pin = in.nextInt(); 
+        	login(Long.parseLong(accountString, 10),pin); 		
+        }
 
-        
-        		}
-            }
     }
+ }
+        
+  
     
     public void login(long accountNo, int pin) {
     	if (isValidLogin(accountNo, pin)) {	
         	activeAccount = bank.login(accountNo, pin);
-            System.out.println("\nHello, again, " + activeAccount.getAccountHolder().getFirstName() + "!\n");
+            System.out.println("\nHello, again, " + activeAccount.getAccountHolder().getFirstName() + "!");
             boolean validLogin = true;
             while (validLogin) {
                 switch (getSelection()) {
@@ -96,7 +98,7 @@ public class ATM {
     }
     
     public int getSelection() {
-        System.out.println("[1] View balance");
+        System.out.println("\n[1] View balance");
         System.out.println("[2] Deposit money");
         System.out.println("[3] Withdraw money");
         System.out.println("[4] Transfer money");
@@ -108,7 +110,7 @@ public class ATM {
     public void showBalance() {
         System.out.println("\nCurrent balance: " + activeAccount.getBalance());
     }
-    
+
     
     public void deposit() {
         System.out.print("\nEnter amount: ");
@@ -122,7 +124,7 @@ public class ATM {
         } else {
         	bank.update(activeAccount);
         	bank.save();
-        	System.out.println("\nDeposit accepted.\n");
+        	System.out.println("\nDeposit accepted.");
         }
     }
         
@@ -138,7 +140,7 @@ public class ATM {
         } else if (status == ATM.SUCCESS) {
         	bank.update(activeAccount);
         	bank.save();
-            System.out.println("\nWithdrawal accepted.\n");
+            System.out.println("\nWithdrawal accepted.");
         }
     }
     
@@ -173,7 +175,7 @@ public class ATM {
                 if (depositStatus == ATM.OVERFLOW) {
                     System.out.println("\nTransfer rejected. Amount would cause destination balance to exceed $999,999,999,999.99.\n");
                 } else if (depositStatus == ATM.SUCCESS) {
-                	System.out.println("\nTransfer accepted.\n");
+                	System.out.println("\nTransfer accepted.");
                 	bank.update(activeAccount);
                 	bank.save();
                 }
@@ -191,11 +193,12 @@ public class ATM {
     	System.out.print("Last name: ");
     	String lastName = in.nextLine();
     	System.out.print("PIN: ");
+    	int pin = in.nextInt();
 
     	
     }
     
-    public void shutdown() {
+    public void shutdown() {    	
         if (in != null) {
             in.close();
         }
