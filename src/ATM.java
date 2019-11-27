@@ -36,23 +36,28 @@ public class ATM {
     }
     
     public void startup() {
-    	long accountNo;
-    	String accountString = ""; 
-    	int pin;
         System.out.println("Welcome to the AIT ATM!\n");
         
        
         while(true) {
-        System.out.print("Account No.: ");
+        	long accountNo;
+        	String accountString = ""; 
+        	int pin;	
+       
+        System.out.print("Account Noeeeeee.: ");
         accountString = in.nextLine();
         
         
         if (accountString.trim().equals("+")) { //creates the account
         	accountCreation();
-        } else {
-        	System.out.print("PIN        : ");
+        	Long.parseLong(accountString, 10);    //Converts the account string to account long
+        } else if (isValidLogin(Long.parseLong(accountString, 10), pin)){
+        	accountNo = in.nextLong();
             pin = in.nextInt(); 
+        	System.out.print("PIN      eeee  : ");
         	login(Long.parseLong(accountString, 10),pin); 		
+        } else {
+        	System.out.print("Test.");
         }
 
     }
@@ -188,15 +193,48 @@ public class ATM {
     
    
     public void accountCreation() {    	
-    	System.out.print("First name: ");
-    	String firstName = in.nextLine();
-    	System.out.print("Last name: ");
-    	String lastName = in.nextLine();
-    	System.out.print("PIN: ");
-    	int pin = in.nextInt();
+    	System.out.print("\nFirst name: ");
+    	String firstName = in.nextLine(); //can't be null, min = 1, max = 20
 
     	
+    	
+    	if (firstName == null) {
+    		System.out.println("\nPlease enter your first name.");
+    	} else if (firstName.length() < 1 ) {
+    		System.out.println("\nPlease make sure your first name has more than 0 characters.");
+    	} else if (firstName.length() > 30) {
+    		System.out.println("\nPlease make sure your first name does not exceed 30 characters.");
+    	} else {
+    		System.out.print("Last name: ");
+    		
+    	}
+    	
+    	String lastName = in.nextLine();  //can't be null, min = 1, max = 30
+    	
+    	if (lastName == null) {
+    		System.out.println("\nPlease enter your last name.");
+    	} else if (lastName.length() < 1) {
+    		System.out.println("\nPlease make sure your last name has more than 0 characters");
+    	} else if (lastName.length() > 30) {
+    		System.out.println("\nPlease make sure your last name does not exceed 30 characters.");
+    	} else {
+    		System.out.print("PIN: ");
+    	}
+    	
+    	int pin = in.nextInt(); //between 1000 and 9999
+    	
+    	if (pin > 9999) {
+    		System.out.println("\nPlease make sure your pin does not exceed 9999.");
+    	} else if (pin < 1000) {
+    		System.out.println("\nPlease make sure your pin is larger than 1000.");
+    	} else {
+    		System.out.println("\nYour bank account number is: ");
+    		getSelection();
+    	}
     }
+ 
+    
+    
     
     public void shutdown() {    	
         if (in != null) {
