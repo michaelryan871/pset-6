@@ -44,15 +44,15 @@ public class ATM {
         while (true) {
             System.out.print("Account No.: ");
             accountString = in.nextLine();
-                
-            
-            if (accountString.trim().equals("+")) {
-            	accountCreation();
-            } else {
+                    	 
             System.out.print("PIN        : ");
             pin = in.nextInt();
             login(Long.parseLong(accountString, 10),pin);
+         /*   
+            if (accountString.trim().equals("+")) {
+            	System.out.println("Account Creation Test.");
             }
+          */
         }
     }
     
@@ -120,7 +120,7 @@ public class ATM {
         } else {
         	bank.update(activeAccount);
         	bank.save();
-        	System.out.println("\nDeposit accepted.\n\n");
+        	System.out.println("\nDeposit accepted.\n");
         }
     }
         
@@ -184,11 +184,13 @@ public class ATM {
     
    
     public void accountCreation() {    	
-    	System.out.print("\nFirst name: ");
+    	System.out.print("First name: ");
     	String firstName = in.nextLine();
     	System.out.print("Last name: ");
     	String lastName = in.nextLine();
     	System.out.print("PIN: ");
+    	
+    	
     	
     }
     
